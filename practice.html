@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libre Type</title>
+    <link rel="icon" href="LibreIcon.png" type="image/png">
+    <link rel="shortcut icon" href="LibreIcon.png" type="image/png">
+    <style>
+        /* Removing the scrollbars */
+        html, body {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* Dark Mode Styles */
+        body {
+            background-color: #111111;
+            color: #FFFFFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #111111;
+            width: 100%;
+            padding: 10px 20px;
+        }
+
+        .navbar-logo {
+            padding: 20px;
+            padding-left: 400px;
+            color: #FFFFFF;
+            font-size: 24px;
+        }
+
+        .navbar-buttons {
+            padding-right: 400px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-button {
+            background-color: #FFFFFF;
+            color: #190617;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, opacity 0.3s, transform 0.1s;
+        }
+
+        /* Input Text Box Styles */
+        .input-box {
+            background-color: #111111;
+            color: #FFFFFF;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 100px;
+            margin-top: 100px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            border: none;
+        }
+
+        /* Button Styles */
+        .keyboard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .key {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #111111;
+            color: #FFFFFF;
+            border: ;
+            border-radius: 5px;
+            margin: 2px;
+            cursor: pointer;
+            transition: background-color 0.3s, opacity 0.3s, transform 0.1s;
+            opacity: 0.6;
+        }
+
+        /* Dark Mode Button Styles */
+        .dark-mode .key {
+            background-color: #444;
+        }
+
+        /* Animation Effect on Button Click */
+        .key.active {
+            background-color: #FFFFFF;
+            color: #111111;
+            border-color: #FFFFFF;
+            transform: scale(0.95);
+            opacity: 1;
+        }
+
+        /* Wider Spacebar Button */
+        #SPACE {
+            padding: 10px 150px; /* Adjust the padding to make it wider */
+        }
+
+        .wpm-display {
+            font-family: Consolas, monospace;
+            font-size: 16px;
+            color: #FFFFFF;
+            text-align: center;
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Incorrectly typed words in red */
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <!-- Replace the text with an image -->
+        <div class="navbar-logo">
+            <img src="LibreType.png" alt="Logo Placeholder">
+        </div>
+        <div class="navbar-buttons">
+            <button class="navbar-button">Learn</button>
+            <button class="navbar-button">Practice</button>
+            <button class="navbar-button">Compete</button>
+        </div>
+    </div>
+
+    <!-- Replace Text Box with Input Text Box -->
+    <input type="text" class="input-box" id="textbox" placeholder="Type something...">
+
+    <!-- Display WPM -->
+    <div class="wpm-display">
+        WPM: <span id="wpm-value">0</span>
+    </div>
+
+    <!-- Paragraph Content -->
+    <p id="paragraph">This is a random paragraph. Try typing it correctly.</p>
+
+    <!-- Rest of your content -->
+    <!-- Buttons for letters A to Z arranged in QWERTY layout -->
+    <div class="keyboard">
+        <!-- Your button code -->
+        <div class="row">
+            <button class="key" id="Q">Q</button>
+            <button class="key" id="W">W</button>
+            <button class="key" id="E">E</button>
+            <button class="key" id="R">R</button>
+            <button class="key" id="T">T</button>
+            <button class="key" id="Y">Y</button>
+            <button class="key" id="U">U</button>
+            <button class="key" id="I">I</button>
+            <button class="key" id="O">O</button>
+            <button class="key" id="P">P</button>
+        </div>
+        <div class="row">
+            <button class="key" id="A">A</button>
+            <button class="key" id="S">S</button>
+            <button class="key" id="D">D</button>
+            <button class="key" id="F">F</button>
+            <button class="key" id="G">G</button>
+            <button class="key" id="H">H</button>
+            <button class="key" id="J">J</button>
+            <button class="key" id="K">K</button>
+            <button class="key" id="L">L</button>
+        </div>
+        <div class="row">
+            <button class="key" id="Z">Z</button>
+            <button class="key" id="X">X</button>
+            <button class="key" id="C">C</button>
+            <button class="key" id="V">V</button>
+            <button class="key" id="B">B</button>
+            <button class="key" id="N">N</button>
+            <button class="key" id="M">M</button>
+        </div>
+        <!-- Add a wider spacebar button -->
+        <div class="row">
+            <button class="key" id="SPACE">SPACE</button>
+            <button class="key" id="BACKSPACE">Backspace</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to listen for keyboard events and trigger button clicks
+        document.addEventListener('keydown', function (event) {
+            const key = event.key.toUpperCase();
+            const button = key === ' ' ? document.getElementById('SPACE') : document.getElementById(key);
+
+            if (button) {
+                // Simulate a button click when the corresponding key is pressed
+                button.classList.add('active');
+
+                // Prevent the default spacebar behavior (scrolling) only if the input box is not focused
+                if (key === ' ' && document.activeElement !== document.querySelector('.input-box')) {
+                    event.preventDefault();
+                }
+            }
+        });
+
+        // JavaScript to remove the active class when the key is released
+        document.addEventListener('keyup', function (event) {
+            const key = event.key.toUpperCase();
+            const button = key === ' ' ? document.getElementById('SPACE') : document.getElementById(key);
+
+            if (button) {
+                button.classList.remove('active');
+            }
+        });
+
+        // JavaScript for generating a random paragraph
+        const paragraphs = [
+            "Above all, don't lie to yourself. The man who lies to himself and listens to his own lie comes to a point that he cannot distinguish the truth within him, or around him, and so loses all respect for himself and for others. And having no respect he ceases to love.",
+            "Pain and suffering are always inevitable for a large intelligence and a deep heart. The really great men must, I think, have great sadness on earth.",
+            "To go wrong in one's own way is better than to go right in someone else's",
+            "We sometimes encounter people, even perfect strangers, who begin to interest us at first sight, somehow suddenly, all at once, before a word has been spoken.",
+            "People speak sometimes about the 'bestial' cruelty of man, but that is terribly unjust and offensive to beasts, no animal could ever be so cruel as a man, so artfully, so artistically cruel."
+        ];
+
+        const paragraphElement = document.getElementById('paragraph');
+        let currentParagraphIndex = 0;
+
+        function displayRandomParagraph() {
+            currentParagraphIndex = Math.floor(Math.random() * paragraphs.length);
+            paragraphElement.textContent = paragraphs[currentParagraphIndex];
+        }
+
+        displayRandomParagraph();
+
+        // JavaScript for calculating and displaying WPM
+        const inputBox = document.getElementById('textbox');
+        const wpmValue = document.getElementById('wpm-value');
+        const paragraphText = paragraphElement.textContent.split(' ');
+
+        let startTime;
+        let wordsTyped = 0;
+        let lastTypedWordIndex = -1;
+
+        inputBox.addEventListener('input', function () {
+            const inputText = inputBox.value.trim().split(' ');
+            const typedWordIndex = inputText.length - 1;
+
+            // Calculate WPM
+            if (!startTime) {
+                startTime = Date.now();
+            }
+
+            const elapsedTime = (Date.now() - startTime) / 60000; // in minutes
+            wordsTyped = inputText.length;
+
+            const wpm = wordsTyped / elapsedTime;
+            wpmValue.textContent = Math.round(wpm);
+
+            // Check for incorrectly typed words and highlight them
+            if (typedWordIndex > lastTypedWordIndex) {
+                const typedWord = inputText[typedWordIndex];
+                const actualWord = paragraphText[typedWordIndex];
+
+                if (typedWord !== actualWord) {
+                    const paragraphWords = paragraphElement.textContent.split(' ');
+                    paragraphWords[typedWordIndex] = `<span class="incorrect">${actualWord}</span>`;
+                    paragraphElement.innerHTML = paragraphWords.join(' ');
+                }
+
+                lastTypedWordIndex = typedWordIndex;
+            }
+        });
+    </script>
+</body>
+</html>
